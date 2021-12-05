@@ -15,12 +15,9 @@ namespace MatchUpLibrary
         {
             string sentance = $"{name1} matches {name2}";
 
-            List<char> sentanceLetters = new List<char>();
-            sentanceLetters.AddRange(sentance);
-
             if (verifyName(name1) && verifyName(name2))
             {
-                Console.WriteLine($"{name1} matches {name2}");
+                List<int> charCount = countChars(sentance);
             }
             else
             {
@@ -36,6 +33,22 @@ namespace MatchUpLibrary
         static bool verifyName(string name)
         {
             return Regex.IsMatch(name, "^[a-zA-Z]*$");
+        }
+
+        /// <summary>
+        /// Counts the occurence of each character in the sentance.
+        /// </summary>
+        /// <param name="sentance"></param>
+        /// <returns>A List<int> with the count of each character.</returns>
+        static List<int> countChars(string sentance)
+        {
+            List<int> charCount = new List<int>();
+            List<char> sentanceLetters = new List<char>();
+            sentanceLetters.AddRange(sentance.Replace(" ", string.Empty));
+
+            
+
+            return charCount;
         }
     }
 }
