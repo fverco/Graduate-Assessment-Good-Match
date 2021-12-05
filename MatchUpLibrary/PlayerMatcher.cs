@@ -17,13 +17,10 @@ namespace MatchUpLibrary
 
             if (VerifyName(name1) && VerifyName(name2))
             {
-                List<int> charCount = CountChars(sentance);
+                List<int> charCountList = CountChars(sentance);
+                int matchPercentage = ReduceToPercentage(charCountList);
 
-                Console.WriteLine();
-                foreach (int i in charCount)
-                {
-                    Console.Write(i);
-                }
+                Console.WriteLine($"{name1} matches {name2} {matchPercentage}%");
             }
             else
             {
@@ -44,12 +41,15 @@ namespace MatchUpLibrary
         /// <summary>
         /// Counts the occurence of each character in the sentance.
         /// </summary>
+        /// <remarks>
+        /// This is not case sensitive and spaces are ignored.
+        /// </remarks>
         /// <param name="sentance"></param>
         /// <returns>A List<int> with the count of each character.</returns>
         static List<int> CountChars(string sentance)
         {
-            List<int> charCountList = new List<int>();
-            List<char> sentanceLetters = new List<char>();
+            List<int> charCountList = new();
+            List<char> sentanceLetters = new();
             sentanceLetters.AddRange(sentance.Replace(" ", string.Empty).ToLower());
             char currentChar;
             int currentCharCount;
@@ -79,6 +79,61 @@ namespace MatchUpLibrary
             }
 
             return charCountList;
+        }
+
+        /// <summary>
+        /// Reduces the list of integers to a double digit number.
+        /// </summary>
+        /// <param name="charCountList">List of integers that represents the count of characters.</param>
+        /// <returns>A double digit number representing a percentage.</returns>
+        static int ReduceToPercentage(List<int> charCountList)
+        {
+            List<int> tempCountList = new();
+
+            while (charCountList.Count != 2)
+            {
+                while (charCountList.Count > 1)
+                {
+                    AddAsDigits(charCountList[0] + charCountList[^1], tempCountList);
+                    charCountList.RemoveAt(0);
+                    charCountList.RemoveAt(charCountList.Count - 1);
+                }
+
+                if (charCountList.Count == 1)
+                {
+                    tempCountList.Add(charCountList[0]);
+                }
+
+                charCountList = new List<int>(tempCountList);
+                tempCountList.Clear();
+            }
+            
+            return Int32.Parse($"{charCountList[0]}{charCountList[1]}");
+        }
+
+        /// <summary>
+        /// Splits a number into digits and add them individually into a List<int>.
+        /// </summary>
+        /// <remarks>
+        /// If a single digit number is passed instead, it will be added to the List<int> directly.
+        /// </remarks>
+        /// <param name="num">The number whose digits will be split.</param>
+        /// <param name="digitList">The list to which the digits will be added.</param>
+        static void AddAsDigits(in int num, List<int> digitList)
+        {
+            if (num > 9)
+            {
+                string numText = num.ToString();
+
+                for (int i = 0; i < numText.Length; i++)
+                {
+                    digitList.Add(numText[i] - '0');
+                }
+            } 
+            else
+            {
+                digitList.Add(num);
+            }
         }
     }
 }
