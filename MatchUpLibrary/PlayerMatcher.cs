@@ -18,6 +18,12 @@ namespace MatchUpLibrary
             if (verifyName(name1) && verifyName(name2))
             {
                 List<int> charCount = countChars(sentance);
+
+                Console.WriteLine();
+                foreach (int i in charCount)
+                {
+                    Console.Write(i);
+                }
             }
             else
             {
@@ -42,13 +48,37 @@ namespace MatchUpLibrary
         /// <returns>A List<int> with the count of each character.</returns>
         static List<int> countChars(string sentance)
         {
-            List<int> charCount = new List<int>();
+            List<int> charCountList = new List<int>();
             List<char> sentanceLetters = new List<char>();
-            sentanceLetters.AddRange(sentance.Replace(" ", string.Empty));
+            sentanceLetters.AddRange(sentance.Replace(" ", string.Empty).ToLower());
+            char currentChar;
+            int currentCharCount;
 
-            
+            int i = 0;
+            while (i < sentanceLetters.Count)
+            {
+                currentChar = sentanceLetters[i];
+                currentCharCount = 1;
+                sentanceLetters.RemoveAt(i);
 
-            return charCount;
+                int j = i;
+                while (j < sentanceLetters.Count)
+                {
+                    if (sentanceLetters[j] == currentChar)
+                    {
+                        ++currentCharCount;
+                        sentanceLetters.RemoveAt(j);
+                    }
+                    else
+                    {
+                        ++j;
+                    }
+                }
+
+                charCountList.Add(currentCharCount);
+            }
+
+            return charCountList;
         }
     }
 }
