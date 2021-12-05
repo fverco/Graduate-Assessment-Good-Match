@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace MatchUpLibrary
 {
@@ -12,10 +13,24 @@ namespace MatchUpLibrary
             List<char> sentanceLetters = new List<char>();
             sentanceLetters.AddRange(sentance);
 
-            foreach (char character in sentanceLetters)
+            if (verifyName(name1) && verifyName(name2))
             {
-                Console.WriteLine(character);
+                Console.WriteLine($"{name1} matches {name2}");
             }
+            else
+            {
+                Console.WriteLine("Some or both of the names contain non-alphabetic characters.");
+            }
+        }
+
+        /// <summary>
+        /// Return true if the name only contains alphabetic characters.
+        /// </summary>
+        /// <param name="name">Name of player</param>
+        /// <returns>true or false</returns>
+        static bool verifyName(string name)
+        {
+            return Regex.IsMatch(name, "^[a-zA-Z]*$");
         }
     }
 }
