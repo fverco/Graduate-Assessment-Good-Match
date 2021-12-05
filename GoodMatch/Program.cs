@@ -68,7 +68,7 @@ namespace GoodMatch
             string path = "";
 
             Console.WriteLine("Multi input mode.");
-            
+
             while (!File.Exists(path) || !path.ToLower().EndsWith(".csv"))
             {
                 Console.WriteLine("Please provide a valid path to a CSV file with all the players...");
@@ -109,7 +109,7 @@ namespace GoodMatch
             {
                 foreach (string female in femalePlayerList)
                 {
-                    MatchResult matchResult = new MatchResult();
+                    MatchResult matchResult = new();
                     int percentage = PlayerMatcher.MatchPlayers(male, female);
                     matchResult.name1 = male;
                     matchResult.name2 = female;
@@ -120,7 +120,23 @@ namespace GoodMatch
                 }
             }
 
-            results.Sort((x, y) => y.percentage.CompareTo(x.percentage));
+            results.Sort((x, y) => {
+                if (x.percentage == y.percentage)
+                {
+                    if (x.name1 == y.name1)
+                    {
+                        return x.name2.CompareTo(y.name2);
+                    }
+                    else
+                    {
+                        return x.name1.CompareTo(y.name1);
+                    }
+                }
+                else
+                {
+                    return y.percentage.CompareTo(x.percentage);
+                }
+            });
 
             StreamWriter sw = new("output.txt");
 
