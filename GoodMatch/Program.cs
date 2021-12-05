@@ -7,21 +7,37 @@ namespace GoodMatch
     {
         static void Main(string[] args)
         {
-            string name1, name2;
-
-            Console.WriteLine("Welcome to Good Match.\nPlease provide two player names...\n");
+            string inp = "";
+            Console.WriteLine("Welcome to Good Match.");
             
-            Console.Write("Name 1: ");
-            name1 = Console.ReadLine();
-
+            while (inp.ToLower() != "s" && inp.ToLower() != "m")
+            {
+                Console.WriteLine("Single input mode or Multi input mode? <S or M>");
+                inp = Console.ReadLine();
+            }
             Console.WriteLine();
 
-            Console.Write("Name 2: ");
-            name2 = Console.ReadLine();
+            if (inp.ToLower() == "s")
+            {
+                string name1, name2;
 
-            Console.WriteLine();
+                Console.WriteLine("Single input mode.\nPlease provide two player names...\n");
 
-            Console.WriteLine(PlayerMatcher.MatchPlayers(name1, name2));
+                Console.Write("Name 1: ");
+                name1 = Console.ReadLine();
+
+                Console.WriteLine();
+
+                Console.Write("Name 2: ");
+                name2 = Console.ReadLine();
+
+                Console.WriteLine();
+
+                Console.WriteLine(PlayerMatcher.MatchPlayers(name1, name2));
+            } else
+            {
+                Console.WriteLine("Multi output mode.");
+            }
         }
     }
 }
