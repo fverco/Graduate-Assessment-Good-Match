@@ -1,5 +1,7 @@
 ﻿using System;
 using MatchUpLibrary;
+using System.IO;
+using System.Collections.Generic;
 
 namespace GoodMatch
 {
@@ -54,7 +56,44 @@ namespace GoodMatch
         /// </summary>
         static void RunMultiInputMode()
         {
-            Console.WriteLine("Multi output mode.");
+            string path = "";
+
+            Console.WriteLine("Multi input mode.");
+            
+            while (!File.Exists(path) || !path.ToLower().EndsWith(".csv"))
+            {
+                Console.WriteLine("Please provide a valid path to a CSV file with all the players...");
+                path = Console.ReadLine();
+            }
+
+            StreamReader sr = new(path);
+            sr.BaseStream.Seek(0, SeekOrigin.Begin);
+
+            List<string> malePlayerList = new();
+            List<string> femalePlayerList = new();
+            string line = sr.ReadLine();
+
+            while (line != null)
+            {
+                string[] player = line.Split(',');
+
+                if (player[1] == "m" && !malePlayerList.Contains(player[0]))
+                {
+                    malePlayerList.Add(player[0]);
+                } else
+                {
+                    if (player[1] == "f" && !femalePlayerList.Contains(player[0]))
+                    {
+                        femalePlayerList.Add(player[0]);
+                    }
+                }
+
+                line = sr.ReadLine();
+            }
+
+            sr.Close();
+
+            
         }
     }
 }
