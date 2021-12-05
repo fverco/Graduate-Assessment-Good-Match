@@ -9,7 +9,7 @@ namespace QuestionOne
         {
             string name1, name2;
 
-            Console.WriteLine("Welcome to the Player Matcher.\nPlease provide two player names...\n");
+            Console.WriteLine("Welcome to Good Match.\nPlease provide two player names...\n");
             
             Console.Write("Name 1: ");
             name1 = Console.ReadLine();
