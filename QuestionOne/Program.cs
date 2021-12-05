@@ -1,7 +1,7 @@
 ﻿using System;
 using MatchUpLibrary;
 
-namespace QuestionOne
+namespace GoodMatch
 {
     internal class Program
     {
