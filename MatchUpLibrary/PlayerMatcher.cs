@@ -11,13 +11,13 @@ namespace MatchUpLibrary
         /// </summary>
         /// <param name="name1"></param>
         /// <param name="name2"></param>
-        public static void matchPlayers(string name1, string name2)
+        public static void MatchPlayers(string name1, string name2)
         {
             string sentance = $"{name1} matches {name2}";
 
-            if (verifyName(name1) && verifyName(name2))
+            if (VerifyName(name1) && VerifyName(name2))
             {
-                List<int> charCount = countChars(sentance);
+                List<int> charCount = CountChars(sentance);
 
                 Console.WriteLine();
                 foreach (int i in charCount)
@@ -36,7 +36,7 @@ namespace MatchUpLibrary
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        static bool verifyName(string name)
+        static bool VerifyName(string name)
         {
             return Regex.IsMatch(name, "^[a-zA-Z]*$");
         }
@@ -46,7 +46,7 @@ namespace MatchUpLibrary
         /// </summary>
         /// <param name="sentance"></param>
         /// <returns>A List<int> with the count of each character.</returns>
-        static List<int> countChars(string sentance)
+        static List<int> CountChars(string sentance)
         {
             List<int> charCountList = new List<int>();
             List<char> sentanceLetters = new List<char>();
