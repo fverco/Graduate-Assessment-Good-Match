@@ -6,6 +6,11 @@ namespace MatchUpLibrary
 {
     public static class PlayerMatcher
     {
+        /// <summary>
+        /// Calculates the match percentage between two people's first names.
+        /// </summary>
+        /// <param name="name1"></param>
+        /// <param name="name2"></param>
         public static void matchPlayers(string name1, string name2)
         {
             string sentance = $"{name1} matches {name2}";
