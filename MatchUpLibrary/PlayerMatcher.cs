@@ -11,29 +11,19 @@ namespace MatchUpLibrary
         /// </summary>
         /// <param name="name1"></param>
         /// <param name="name2"></param>
-        /// <returns>A string with the match percentage, or an error message if the names are invalid. </returns>
-        public static string MatchPlayers(string name1, string name2)
+        /// <returns>An integer representing the match percentage, or -1 if the names are not valid.</returns>
+        public static int MatchPlayers(string name1, string name2)
         {
             string sentance = $"{name1} matches {name2}";
 
             if (VerifyName(name1) && VerifyName(name2))
             {
                 List<int> charCountList = CountChars(sentance);
-                int matchPercentage = ReduceToPercentage(charCountList);
-                string output = $"{name1} matches {name2} {matchPercentage}%";
-
-                if (matchPercentage > 80)
-                {
-                    return output + ", good match";
-                }
-                else
-                {
-                    return output;
-                }
+                return ReduceToPercentage(charCountList);
             }
             else
             {
-                return "Error. One or both of the names contain non-alphabetic characters.";
+                return -1;
             }
         }
 
