@@ -31,8 +31,8 @@ namespace MatchUpLibrary
         /// <summary>
         /// Return true if the name only contains alphabetic characters.
         /// </summary>
-        /// <param name="name">Name of player</param>
-        /// <returns>true or false</returns>
+        /// <param name="name"></param>
+        /// <returns></returns>
         static bool verifyName(string name)
         {
             return Regex.IsMatch(name, "^[a-zA-Z]*$");
