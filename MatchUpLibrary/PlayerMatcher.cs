@@ -11,7 +11,8 @@ namespace MatchUpLibrary
         /// </summary>
         /// <param name="name1"></param>
         /// <param name="name2"></param>
-        public static void MatchPlayers(string name1, string name2)
+        /// <returns>A string with the match percentage, or an error message if the names are invalid. </returns>
+        public static string MatchPlayers(string name1, string name2)
         {
             string sentance = $"{name1} matches {name2}";
 
@@ -19,12 +20,20 @@ namespace MatchUpLibrary
             {
                 List<int> charCountList = CountChars(sentance);
                 int matchPercentage = ReduceToPercentage(charCountList);
+                string output = $"{name1} matches {name2} {matchPercentage}%";
 
-                Console.WriteLine($"{name1} matches {name2} {matchPercentage}%");
+                if (matchPercentage > 80)
+                {
+                    return output + ", good match";
+                }
+                else
+                {
+                    return output;
+                }
             }
             else
             {
-                Console.WriteLine("Some or both of the names contain non-alphabetic characters.");
+                return "Error. One or both of the names contain non-alphabetic characters.";
             }
         }
 
@@ -112,7 +121,7 @@ namespace MatchUpLibrary
         }
 
         /// <summary>
-        /// Splits a number into digits and add them individually into a List<int>.
+        /// Splits a number into digits and adds them individually into a List<int>.
         /// </summary>
         /// <remarks>
         /// If a single digit number is passed instead, it will be added to the List<int> directly.

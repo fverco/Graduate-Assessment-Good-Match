@@ -22,7 +22,7 @@ namespace QuestionOne
 
             Console.WriteLine();
 
-            PlayerMatcher.MatchPlayers(name1, name2);
+            Console.WriteLine(PlayerMatcher.MatchPlayers(name1, name2));
         }
     }
 }
