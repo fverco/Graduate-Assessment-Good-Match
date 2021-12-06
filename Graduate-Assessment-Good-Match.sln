@@ -3,9 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31919.166
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatchUpLibrary", "MatchUpLibrary\MatchUpLibrary.csproj", "{F35071D2-BA3B-409E-AEFC-F71684EC5282}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MatchUpLibrary", "MatchUpLibrary\MatchUpLibrary.csproj", "{F35071D2-BA3B-409E-AEFC-F71684EC5282}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoodMatch", "GoodMatch\GoodMatch.csproj", "{8A82FC5A-5E75-4F36-97CE-B00FF616BEF2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoodMatchGui", "GoodMatchGui\GoodMatchGui.csproj", "{D18207D9-9758-45A9-99CD-84FFFCEBA2BA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F35071D2-BA3B-409E-AEFC-F71684EC5282} = {F35071D2-BA3B-409E-AEFC-F71684EC5282}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +26,10 @@ Global
 		{8A82FC5A-5E75-4F36-97CE-B00FF616BEF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A82FC5A-5E75-4F36-97CE-B00FF616BEF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A82FC5A-5E75-4F36-97CE-B00FF616BEF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D18207D9-9758-45A9-99CD-84FFFCEBA2BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D18207D9-9758-45A9-99CD-84FFFCEBA2BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D18207D9-9758-45A9-99CD-84FFFCEBA2BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D18207D9-9758-45A9-99CD-84FFFCEBA2BA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

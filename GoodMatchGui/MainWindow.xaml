@@ -1,0 +1,23 @@
+﻿<Window x:Class="GoodMatchGui.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="341" Width="439" ResizeMode="NoResize">
+    <Grid HorizontalAlignment="Stretch" Height="Auto" Margin="0,0,0,0" VerticalAlignment="Stretch" Width="Auto">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="339*"/>
+            <ColumnDefinition Width="100*"/>
+            <ColumnDefinition Width="0*"/>
+        </Grid.ColumnDefinitions>
+        <Button x:Name="ButtonMatch" Content="Match Names" HorizontalAlignment="Left" Margin="167,175,0,0" VerticalAlignment="Top" Width="98" Click="Button_Click" Height="20"/>
+        <Label x:Name="LabelTitle" Content="Good Match&#xD;&#xA;" HorizontalAlignment="Left" Margin="136,21,0,0" VerticalAlignment="Top" Height="37" Width="159" FontFamily="Stencil" Foreground="#FF232323" FontSize="24"/>
+        <TextBox x:Name="TextBoxName1" HorizontalAlignment="Left" Margin="43,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" Height="18"/>
+        <TextBox x:Name="TextBoxName2" HorizontalAlignment="Left" Margin="240,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" Height="18" Grid.ColumnSpan="2"/>
+        <Label x:Name="LabelName1" Content="Name 1" HorizontalAlignment="Left" Margin="86,78,0,0" VerticalAlignment="Top" Height="32" Width="64" FontSize="16"/>
+        <Label x:Name="LabelName2" Content="Name 2" HorizontalAlignment="Left" Margin="283,78,0,0" VerticalAlignment="Top" Height="32" Width="64" FontSize="16" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="TextBoxResults" HorizontalAlignment="Left" Margin="43,255,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="347" TextAlignment="Center" Text="" Height="18" Grid.ColumnSpan="2"/>
+        <Label x:Name="LabelResults" Content="Results" HorizontalAlignment="Left" Margin="190,218,0,0" VerticalAlignment="Top" Height="32" Width="59" FontSize="16"/>
+    </Grid>
+</Window>
