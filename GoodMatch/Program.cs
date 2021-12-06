@@ -80,33 +80,13 @@ namespace GoodMatch
 
             ReadInputFromFile(path, malePlayerList, femalePlayerList);
 
-            List<MatchResult?> results = new();
             bool invalidInputFound = false;
+            List<MatchResult?> originalResults = MatchPlayerGroups(malePlayerList, femalePlayerList, ref invalidInputFound);
+            List<MatchResult?> reverseResults = MatchPlayerGroups(femalePlayerList, malePlayerList, ref invalidInputFound);
 
-            // Match each male player with each female player.
-            foreach (string male in malePlayerList)
-            {
-                foreach (string female in femalePlayerList)
-                {
-                    MatchResult? matchResult = PlayerMatcher.MatchPlayers(male, female);
+            SortResults(originalResults);
 
-                    if (matchResult != null)
-                    {
-                        results.Add(matchResult);
-                    }
-                    else
-                    {
-                        if (!invalidInputFound)
-                        {
-                            invalidInputFound = true;
-                        }
-                    }
-                }
-            }
-
-            SortResults(results);
-
-            WriteResultsToFile(results);
+            WriteResultsToFile(originalResults);
 
             if (invalidInputFound)
             {
@@ -200,6 +180,40 @@ namespace GoodMatch
 
             sw.Flush();
             sw.Close();
+        }
+
+        /// <summary>
+        /// Matches each player from playerList1 with each player from playerList2. If an invalid name(s) is/are found, invalidInputFound will become true and those names will be ignored.
+        /// </summary>
+        /// <param name="playerList1"></param>
+        /// <param name="playerList2"></param>
+        /// <param name="invalidInputFound"></param>
+        /// <returns>A list of match results between the two player lists.</returns>
+        static List<MatchResult?> MatchPlayerGroups(List<string> playerList1, List<string> playerList2, ref bool invalidInputFound)
+        {
+            List<MatchResult?> results = new();
+
+            foreach (string player1 in playerList1)
+            {
+                foreach (string player2 in playerList2)
+                {
+                    MatchResult? matchResult = PlayerMatcher.MatchPlayers(player1, player2);
+
+                    if (matchResult != null)
+                    {
+                        results.Add(matchResult);
+                    }
+                    else
+                    {
+                        if (!invalidInputFound)
+                        {
+                            invalidInputFound = true;
+                        }
+                    }
+                }
+            }
+
+            return results;
         }
     }
 }
