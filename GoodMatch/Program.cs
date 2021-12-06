@@ -9,6 +9,8 @@ namespace GoodMatch
     {
         static void Main()
         {
+            Logger.LogAppStart();
+
             string inp = "";
             Console.WriteLine("Welcome to Good Match.");
             
@@ -27,6 +29,8 @@ namespace GoodMatch
             {
                 RunMultiInputMode();
             }
+
+            Logger.LogAppFinish();
         }
 
         /// <summary>
@@ -53,6 +57,7 @@ namespace GoodMatch
             if (result != null)
             {
                 Console.WriteLine(result.Value.resultMessage);
+                Logger.LogMatchPair();
             }
             else
             {
@@ -65,15 +70,32 @@ namespace GoodMatch
         /// </summary>
         static void RunMultiInputMode()
         {
-            string path = "";
+            string path;
 
             Console.WriteLine("Multi input mode.");
 
-            while (!File.Exists(path) || !path.ToLower().EndsWith(".csv"))
+            bool fileExists, pathIsCsv;
+            do
             {
                 Console.WriteLine("Please provide a valid path to a CSV file with all the players...");
                 path = Console.ReadLine();
+
+                fileExists = File.Exists(path);
+                pathIsCsv = path.ToLower().EndsWith(".csv");
+
+                if (!fileExists)
+                {
+                    Logger.LogFileDontExist(path);
+                }
+                else
+                {
+                    if (!pathIsCsv)
+                    {
+                        Logger.LogFileNotCsv(path);
+                    }
+                }
             }
+            while (!fileExists || !pathIsCsv);
 
             List<string> malePlayerList = new();
             List<string> femalePlayerList = new();
@@ -94,6 +116,8 @@ namespace GoodMatch
             {
                 Console.WriteLine("\nSome of the names were invalid and as a result they were ignored.");
             }
+
+            Logger.LogMatchGroups();
         }
 
         /// <summary>
@@ -106,6 +130,7 @@ namespace GoodMatch
         {
             StreamReader sr = new(path);
             sr.BaseStream.Seek(0, SeekOrigin.Begin);
+            Logger.LogReadFromFile(path);
 
             string line = sr.ReadLine();
 
@@ -164,6 +189,7 @@ namespace GoodMatch
         static void WriteResultsToFile(List<MatchResult?> results, List<MatchResult?> averages = null)
         {
             StreamWriter sw = new("output.txt");
+            Logger.LogWriteToFile("output.txt");
 
             for (int i = 0; i < results.Count; i++)
             {

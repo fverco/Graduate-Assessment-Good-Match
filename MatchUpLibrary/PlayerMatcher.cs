@@ -17,7 +17,9 @@ namespace MatchUpLibrary
             string sentance = $"{name1} matches {name2}";
             MatchResult result = new();
 
-            if (VerifyName(name1) && VerifyName(name2))
+            bool validName1 = VerifyName(name1);
+            bool validName2 = VerifyName(name2);
+            if (validName1 && validName2)
             {
                 List<int> charCountList = CountChars(sentance);
                 result.percentage = ReduceToPercentage(charCountList);
@@ -29,6 +31,16 @@ namespace MatchUpLibrary
             }
             else
             {
+                if (!validName1)
+                {
+                    Logger.LogInvalidInput(name1);
+                }
+
+                if (!validName2)
+                {
+                    Logger.LogInvalidInput(name2);
+                }
+
                 return null;
             }
         }
