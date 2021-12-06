@@ -12,18 +12,24 @@ namespace MatchUpLibrary
         /// <param name="name1"></param>
         /// <param name="name2"></param>
         /// <returns>An integer representing the match percentage, or -1 if the names are not valid.</returns>
-        public static int MatchPlayers(string name1, string name2)
+        public static MatchResult? MatchPlayers(string name1, string name2)
         {
             string sentance = $"{name1} matches {name2}";
+            MatchResult result = new();
 
             if (VerifyName(name1) && VerifyName(name2))
             {
                 List<int> charCountList = CountChars(sentance);
-                return ReduceToPercentage(charCountList);
+                result.percentage = ReduceToPercentage(charCountList);
+                result.name1 = name1;
+                result.name2 = name2;
+                result.resultMessage = OutputPercentageMessage(result.name1, result.name2, result.percentage);
+
+                return result;
             }
             else
             {
-                return -1;
+                return null;
             }
         }
 
@@ -132,6 +138,27 @@ namespace MatchUpLibrary
             else
             {
                 digitList.Add(num);
+            }
+        }
+
+        /// <summary>
+        /// Creates a message for the user about the match percentage between two players.
+        /// </summary>
+        /// <param name="name1"></param>
+        /// <param name="name2"></param>
+        /// <param name="matchPercentage"></param>
+        /// <returns>A string message</returns>
+        static string OutputPercentageMessage(in string name1, in string name2, in int matchPercentage)
+        {
+            string output = $"{name1} matches {name2} {matchPercentage}%";
+
+            if (matchPercentage > 80)
+            {
+                return output + ", good match";
+            }
+            else
+            {
+                return output;
             }
         }
     }

@@ -48,11 +48,11 @@ namespace GoodMatch
 
             Console.WriteLine();
 
-            int percentage = PlayerMatcher.MatchPlayers(name1, name2);
+            MatchResult? result = PlayerMatcher.MatchPlayers(name1, name2);
 
-            if (percentage != -1)
+            if (result != null)
             {
-                Console.WriteLine(OutputPercentageMessage(name1, name2, percentage));
+                Console.WriteLine(result.Value.resultMessage);
             }
             else
             {
@@ -103,38 +103,44 @@ namespace GoodMatch
 
             sr.Close();
 
-            List<MatchResult> results = new();
+            List<MatchResult?> results = new();
+            bool invalidInputFound = false;
 
             foreach (string male in malePlayerList)
             {
                 foreach (string female in femalePlayerList)
                 {
-                    MatchResult matchResult = new();
-                    int percentage = PlayerMatcher.MatchPlayers(male, female);
-                    matchResult.name1 = male;
-                    matchResult.name2 = female;
-                    matchResult.percentage = percentage;
-                    matchResult.resultMessage = OutputPercentageMessage(male, female, percentage);
+                    MatchResult? matchResult = PlayerMatcher.MatchPlayers(male, female);
 
-                    results.Add(matchResult);
+                    if (matchResult != null)
+                    {
+                        results.Add(matchResult);
+                    }
+                    else
+                    {
+                        if (!invalidInputFound)
+                        {
+                            invalidInputFound = true;
+                        }
+                    }
                 }
             }
 
             results.Sort((x, y) => {
-                if (x.percentage == y.percentage)
+                if (x.Value.percentage == y.Value.percentage)
                 {
-                    if (x.name1 == y.name1)
+                    if (x.Value.name1 == y.Value.name1)
                     {
-                        return x.name2.CompareTo(y.name2);
+                        return x.Value.name2.CompareTo(y.Value.name2);
                     }
                     else
                     {
-                        return x.name1.CompareTo(y.name1);
+                        return x.Value.name1.CompareTo(y.Value.name1);
                     }
                 }
                 else
                 {
-                    return y.percentage.CompareTo(x.percentage);
+                    return y.Value.percentage.CompareTo(x.Value.percentage);
                 }
             });
 
@@ -142,31 +148,15 @@ namespace GoodMatch
 
             for (int i = 0; i < results.Count; i++)
             {
-                sw.WriteLine(results[i].resultMessage);
+                sw.WriteLine(results[i].Value.resultMessage);
             }
 
             sw.Flush();
             sw.Close();
-        }
 
-        /// <summary>
-        /// Creates a message for the user about the match percentage between two players.
-        /// </summary>
-        /// <param name="name1"></param>
-        /// <param name="name2"></param>
-        /// <param name="matchPercentage"></param>
-        /// <returns>A string message</returns>
-        static string OutputPercentageMessage(in string name1, in string name2, in int matchPercentage)
-        {
-            string output = $"{name1} matches {name2} {matchPercentage}%";
-
-            if (matchPercentage > 80)
+            if (invalidInputFound)
             {
-                return output + ", good match";
-            }
-            else
-            {
-                return output;
+                Console.WriteLine("\nSome of the names were invalid and as a result they were ignored.");
             }
         }
     }
