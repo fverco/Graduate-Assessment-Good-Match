@@ -75,11 +75,56 @@ namespace GoodMatch
                 path = Console.ReadLine();
             }
 
+            List<string> malePlayerList = new();
+            List<string> femalePlayerList = new();
+
+            ReadInputFromFile(path, malePlayerList, femalePlayerList);
+
+            List<MatchResult?> results = new();
+            bool invalidInputFound = false;
+
+            // Match each male player with each female player.
+            foreach (string male in malePlayerList)
+            {
+                foreach (string female in femalePlayerList)
+                {
+                    MatchResult? matchResult = PlayerMatcher.MatchPlayers(male, female);
+
+                    if (matchResult != null)
+                    {
+                        results.Add(matchResult);
+                    }
+                    else
+                    {
+                        if (!invalidInputFound)
+                        {
+                            invalidInputFound = true;
+                        }
+                    }
+                }
+            }
+
+            SortResults(results);
+
+            WriteResultsToFile(results);
+
+            if (invalidInputFound)
+            {
+                Console.WriteLine("\nSome of the names were invalid and as a result they were ignored.");
+            }
+        }
+
+        /// <summary>
+        /// Reads players names from a csv file and splits them into male and female player lists.
+        /// </summary>
+        /// <param name="path">The path to the csv file.</param>
+        /// <param name="malePlayerList">The list for the male players.</param>
+        /// <param name="femalePlayerList">The list for the female players.</param>
+        static void ReadInputFromFile(string path, List<string> malePlayerList, List<string> femalePlayerList)
+        {
             StreamReader sr = new(path);
             sr.BaseStream.Seek(0, SeekOrigin.Begin);
 
-            List<string> malePlayerList = new();
-            List<string> femalePlayerList = new();
             string line = sr.ReadLine();
 
             while (line != null)
@@ -102,30 +147,14 @@ namespace GoodMatch
             }
 
             sr.Close();
+        }
 
-            List<MatchResult?> results = new();
-            bool invalidInputFound = false;
-
-            foreach (string male in malePlayerList)
-            {
-                foreach (string female in femalePlayerList)
-                {
-                    MatchResult? matchResult = PlayerMatcher.MatchPlayers(male, female);
-
-                    if (matchResult != null)
-                    {
-                        results.Add(matchResult);
-                    }
-                    else
-                    {
-                        if (!invalidInputFound)
-                        {
-                            invalidInputFound = true;
-                        }
-                    }
-                }
-            }
-
+        /// <summary>
+        /// Sorts a list of match results in descending order by percentage, then in alphabetical order by name.
+        /// </summary>
+        /// <param name="results"></param>
+        static void SortResults(List<MatchResult?> results)
+        {
             results.Sort((x, y) => {
                 if (x.Value.percentage == y.Value.percentage)
                 {
@@ -143,7 +172,14 @@ namespace GoodMatch
                     return y.Value.percentage.CompareTo(x.Value.percentage);
                 }
             });
+        }
 
+        /// <summary>
+        /// Writes the match results to a text file named output.txt.
+        /// </summary>
+        /// <param name="results"></param>
+        static void WriteResultsToFile(List<MatchResult?> results)
+        {
             StreamWriter sw = new("output.txt");
 
             for (int i = 0; i < results.Count; i++)
@@ -153,11 +189,6 @@ namespace GoodMatch
 
             sw.Flush();
             sw.Close();
-
-            if (invalidInputFound)
-            {
-                Console.WriteLine("\nSome of the names were invalid and as a result they were ignored.");
-            }
         }
     }
 }
