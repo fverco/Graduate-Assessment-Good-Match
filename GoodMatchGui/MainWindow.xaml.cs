@@ -35,5 +35,12 @@ namespace GoodMatchGui
                 MessageBox.Show("Please provide a Name 1 and a Name 2.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        private void ButtonReverse_Click(object sender, RoutedEventArgs e)
+        {
+            string tmp = TextBoxName1.Text;
+            TextBoxName1.Text = TextBoxName2.Text;
+            TextBoxName2.Text = tmp;
+        }
     }
 }
