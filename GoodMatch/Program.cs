@@ -138,16 +138,23 @@ namespace GoodMatch
             {
                 string[] player = line.Split(',');
 
-                if (player[1] == "m" && !malePlayerList.Contains(player[0]))
+                if (player.Length >= 2)
                 {
-                    malePlayerList.Add(player[0]);
+                    if (player[1] == "m" && !malePlayerList.Contains(player[0]))
+                    {
+                        malePlayerList.Add(player[0]);
+                    }
+                    else
+                    {
+                        if (player[1] == "f" && !femalePlayerList.Contains(player[0]))
+                        {
+                            femalePlayerList.Add(player[0]);
+                        }
+                    }
                 }
                 else
                 {
-                    if (player[1] == "f" && !femalePlayerList.Contains(player[0]))
-                    {
-                        femalePlayerList.Add(player[0]);
-                    }
+                    Logger.LogInvalidInput(line);
                 }
 
                 line = sr.ReadLine();
