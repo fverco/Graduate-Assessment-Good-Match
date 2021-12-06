@@ -83,10 +83,12 @@ namespace GoodMatch
             bool invalidInputFound = false;
             List<MatchResult?> originalResults = MatchPlayerGroups(malePlayerList, femalePlayerList, ref invalidInputFound);
             List<MatchResult?> reverseResults = MatchPlayerGroups(femalePlayerList, malePlayerList, ref invalidInputFound);
+            List<MatchResult?> averagesResults = CalculatePairAverages(originalResults, reverseResults);
 
             SortResults(originalResults);
+            SortResults(averagesResults);
 
-            WriteResultsToFile(originalResults);
+            WriteResultsToFile(originalResults, averagesResults);
 
             if (invalidInputFound)
             {
@@ -214,6 +216,38 @@ namespace GoodMatch
             }
 
             return results;
+        }
+
+        /// <summary>
+        /// Calculates the average good match percentage for each pair from both lists of results.
+        /// </summary>
+        /// <param name="originalOrderResults"></param>
+        /// <param name="resverseOrderResults"></param>
+        /// <returns>A list of averages for each pair.</returns>
+        static List<MatchResult?> CalculatePairAverages(List<MatchResult?> originalOrderResults, List<MatchResult?> reverseOrderResults)
+        {
+            List<MatchResult?> averages = new();
+
+            for (int i = 0; i < originalOrderResults.Count; i++)
+            {
+                int j = 0;
+                while (reverseOrderResults[j].Value.name1 != originalOrderResults[i].Value.name2 ||
+                        reverseOrderResults[j].Value.name2 != originalOrderResults[i].Value.name1)
+                {
+                    ++j;
+                }
+
+                MatchResult average = new();
+                average.name1 = originalOrderResults[i].Value.name1;
+                average.name2 = originalOrderResults[i].Value.name2;
+                average.percentage = (originalOrderResults[i].Value.percentage +
+                                        reverseOrderResults[j].Value.percentage) / 2;
+                average.resultMessage = $"The average match score for {average.name1} and {average.name2} is {average.percentage}%";
+
+                averages.Add(average);
+            }
+
+            return averages;
         }
     }
 }
