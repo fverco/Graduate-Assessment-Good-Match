@@ -175,16 +175,27 @@ namespace GoodMatch
         }
 
         /// <summary>
-        /// Writes the match results to a text file named output.txt.
+        /// Writes the match results and averages to a text file named output.txt.
         /// </summary>
-        /// <param name="results"></param>
-        static void WriteResultsToFile(List<MatchResult?> results)
+        /// <param name="results">The match results of pairs of players.</param>
+        /// <param name="averages">The average match results of pairs of players.</param>
+        static void WriteResultsToFile(List<MatchResult?> results, List<MatchResult?> averages = null)
         {
             StreamWriter sw = new("output.txt");
 
             for (int i = 0; i < results.Count; i++)
             {
                 sw.WriteLine(results[i].Value.resultMessage);
+            }
+
+            if (averages != null)
+            {
+                sw.WriteLine();
+
+                for (int i = 0; i < averages.Count; i++)
+                {
+                    sw.WriteLine(averages[i].Value.resultMessage);
+                }
             }
 
             sw.Flush();
