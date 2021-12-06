@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="MainWindow" Height="341" Width="439" ResizeMode="NoResize">
+        Title="Good Match" Height="341" Width="439" ResizeMode="NoResize">
     <Grid HorizontalAlignment="Stretch" Height="Auto" Margin="0,0,0,0" VerticalAlignment="Stretch" Width="Auto">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="339*"/>
