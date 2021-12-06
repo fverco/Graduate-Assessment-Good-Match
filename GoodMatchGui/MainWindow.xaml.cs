@@ -11,6 +11,7 @@ namespace GoodMatchGui
         public MainWindow()
         {
             InitializeComponent();
+            Logger.LogAppStart();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -24,6 +25,7 @@ namespace GoodMatchGui
                 if (result != null)
                 {
                     TextBoxResults.Text = result.Value.resultMessage;
+                    Logger.LogMatchPair();
                 }
                 else
                 {
@@ -41,6 +43,11 @@ namespace GoodMatchGui
             string tmp = TextBoxName1.Text;
             TextBoxName1.Text = TextBoxName2.Text;
             TextBoxName2.Text = tmp;
+        }
+
+        private void Window_Closing (object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Logger.LogAppFinish();
         }
     }
 }
